@@ -59,7 +59,7 @@ object Demo extends App {
 
   system.eventStream.subscribe(listener, classOf[Event])
 
-  Http().bindAndHandle(WebSocketWorker(governor, eventsSource), "0.0.0.0", 4567)
+  Http().bindAndHandle(WebSocketWorker(governor, eventsSource), "localhost", 4567)
 
   Await.result(system.whenTerminated, Duration.Inf)
 }

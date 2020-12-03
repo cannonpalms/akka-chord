@@ -34,7 +34,7 @@ final class Governor(val keyspaceBits: Int) extends Actor with ActorLogging with
   // How long Node should wait until an algorithm is considered to have timed out. This should be significantly
   // longer than the external request timeout, as some algorithms will make multiple external requests before
   // running to completion
-  private val algorithmTimeout = Timeout(5000.milliseconds)
+  private val algorithmTimeout = Timeout(Int.MaxValue.milliseconds)
 
   private val joinRequestTimeout = Timeout(2000.milliseconds)
   private val getSuccessorRequestTimeout = Timeout(2000.milliseconds)
@@ -149,6 +149,30 @@ final class Governor(val keyspaceBits: Int) extends Actor with ActorLogging with
         case None =>
           sender() ! TerminateNodeResponseError(s"Node with ID $nodeId does not exist")
       }
+
+    case LookupKey(originNodeId: Long, key: Long) =>
+      nodes.get(originNodeId) match {
+        case Some(nodeRef) =>
+          nodeRef
+            .ask(FindSuccessor(key))(algorithmTimeout)
+            .mapTo[FindSuccessorResponse]
+            .map {
+              case FindSuccessorOk(_, successor) =>
+                LookupKeyResponseOk(successor.id)
+              case Node.FindSuccessorError(_, message) =>
+                LookupKeyResponseError(message)
+            }
+            .recover {
+              case ex => Failure(ex)
+            }
+        case None =>
+          if (terminatedNodes.contains(originNodeId)) {
+            sender() ! LookupKeyResponseError(s"Node with ID $originNodeId is no longer active")
+          } else {
+            sender() ! LookupKeyResponseError(s"Node with ID $originNodeId does not exist")
+          }
+      }
+
   }
 
   override def receive: Receive = {
@@ -170,6 +194,7 @@ object Governor {
 
   sealed trait Response
 
+  // CreateNode
   case object CreateNode extends Request
 
   sealed trait CreateNodeResponse extends Response
@@ -180,6 +205,7 @@ object Governor {
 
   final case class CreateNodeInvalidRequest(message: String) extends CreateNodeResponse
 
+  // CreateNodeWithSeed
   final case class CreateNodeWithSeed(seedId: Long, seedAddr: InetSocketAddress) extends Request
 
   sealed trait CreateNodeWithSeedResponse extends Response
@@ -190,12 +216,14 @@ object Governor {
 
   final case class CreateNodeWithSeedInvalidRequest(message: String) extends CreateNodeWithSeedResponse
 
+  // GetNodeIdSet
   case object GetNodeIdSet extends Request
 
   sealed trait GetNodeIdSetResponse extends Response
 
   final case class GetNodeIdSetOk(nodeIds: Set[Long]) extends GetNodeIdSetResponse
 
+  // GetNodeState
   final case class GetNodeState(nodeId: Long) extends Request
 
   sealed trait GetNodeStateResponse extends Response
@@ -206,6 +234,7 @@ object Governor {
 
   final case class GetNodeStateInvalidRequest(message: String) extends GetNodeStateResponse
 
+  // GetNodeSuccessorId
   final case class GetNodeSuccessorId(nodeId: Long) extends Request
 
   sealed trait GetNodeSuccessorIdResponse extends Response
@@ -216,6 +245,7 @@ object Governor {
 
   final case class GetNodeSuccessorIdInvalidRequest(message: String) extends GetNodeSuccessorIdResponse
 
+  // TerminateNode
   final case class TerminateNode(nodeId: Long) extends Request
 
   sealed trait TerminateNodeResponse extends Response
@@ -224,6 +254,15 @@ object Governor {
 
   final case class TerminateNodeResponseError(message: String) extends TerminateNodeResponse
 
-  def props(keyspaceBits: Int): Props = Props(new Governor(keyspaceBits))
+  // LookupKey
+  final case class LookupKey(originNodeId: Long, key: Long) extends Request
 
+  sealed trait LookupKeyResponse extends Response
+
+  final case class LookupKeyResponseOk(nodeId: Long) extends LookupKeyResponse
+
+  final case class LookupKeyResponseError(message: String) extends LookupKeyResponse
+
+  // Actor props
+  def props(keyspaceBits: Int): Props = Props(new Governor(keyspaceBits))
 }

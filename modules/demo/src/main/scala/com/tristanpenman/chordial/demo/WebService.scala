@@ -84,8 +84,20 @@ trait WebService {
           throw new Exception(message)
       }
 
+  private def lookup(governor: ActorRef, originNodeId: Long, key: Long): Future[NodeAttributes] =
+    governor
+      .ask(LookupKey(originNodeId, key))
+      .mapTo[LookupKeyResponse]
+      .flatMap {
+        case LookupKeyResponseOk(nodeId) =>
+          getNodeAttributes(governor, nodeId)
+        case Governor.LookupKeyResponseError(message) =>
+          throw new Exception(message)
+      }
+
   protected def routes(governor: ActorRef): Route = pathPrefix("nodes") {
     pathEndOrSingleSlash {
+      // GET /nodes || GET /nodes/
       get {
         val future = getNodes(governor)
         onComplete(future) {
@@ -96,6 +108,7 @@ trait WebService {
         }
       } ~ post {
         parameters(Symbol("seed_id").?) {
+          // POST /nodes?seed_id={seedId} || POST /nodes/?seed_id={seedId}
           case Some(seedId) =>
             val future = governor
               .ask(CreateNodeWithSeed(seedId.toLong, dummyAddr))
@@ -108,6 +121,7 @@ trait WebService {
               case CreateNodeWithSeedInvalidRequest(message) =>
                 complete(BadRequest -> message)
             }
+          // POST /nodes || POST /nodes/
           case None =>
             val future =
               governor.ask(CreateNode).mapTo[CreateNodeResponse]
@@ -121,28 +135,45 @@ trait WebService {
             }
         }
       }
-    } ~ path(IntNumber) { nodeId =>
-      get {
-        val future = governor.ask(GetNodeIdSet).mapTo[GetNodeIdSetResponse]
-        onComplete(future) {
-          case util.Success(GetNodeIdSetOk(nodeIdSet)) =>
-            if (nodeIdSet.contains(nodeId)) {
-              complete {
-                getNodeAttributes(governor, nodeId).map {
-                  _.toJson.compactPrint
+    } ~ pathPrefix(IntNumber) { nodeId =>
+      pathEndOrSingleSlash {
+        // GET /nodes/{nodeId}
+        get {
+          val future = governor.ask(GetNodeIdSet).mapTo[GetNodeIdSetResponse]
+          onComplete(future) {
+            case util.Success(GetNodeIdSetOk(nodeIdSet)) =>
+              if (nodeIdSet.contains(nodeId)) {
+                complete {
+                  getNodeAttributes(governor, nodeId).map {
+                    _.toJson.compactPrint
+                  }
                 }
+              } else {
+                complete(BadRequest -> s"Node with ID $nodeId does not exist")
               }
-            } else {
-              complete(BadRequest -> s"Node with ID $nodeId does not exist")
-            }
-          case _ =>
-            complete(InternalServerError -> messageForInternalServerError)
-        }
-      } ~ delete {
-        complete {
-          terminateNode(governor, nodeId).map { _ =>
-            OK
+            case _ =>
+              complete(InternalServerError -> messageForInternalServerError)
           }
+          // DELETE /nodes/{nodeId}
+        } ~ delete {
+          complete {
+            terminateNode(governor, nodeId).map { _ =>
+              OK
+            }
+          }
+        }
+      } ~ pathPrefix("lookup") {
+        parameters(Symbol("key").?) {
+          case Some(key) =>
+            val future = lookup(governor, nodeId, key.toLong)
+            onComplete(future) {
+              case util.Success(result) =>
+                complete(result.toJson.compactPrint)
+              case util.Failure(_) =>
+                complete(InternalServerError -> messageForInternalServerError)
+            }
+          case None =>
+            complete(BadRequest -> s"No key provided for lookup")
         }
       }
     }

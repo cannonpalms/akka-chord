@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ScalaCompilerConfiguration">
+    <profile name="sbt 1" modules="chordial_6259,Chordial" />
+    <profile name="sbt 2" modules="chordial-core,chordial-demo,chordial-dht">
+      <option name="deprecationWarnings" value="true" />
+      <option name="uncheckedWarnings" value="true" />
+      <option name="featureWarnings" value="true" />
+      <parameters>
+        <parameter value="-opt-warnings:_" />
+        <parameter value="-Xlint:_" />
+        <parameter value="-Ywarn-dead-code" />
+        <parameter value="-Ywarn-extra-implicit" />
+        <parameter value="-Ywarn-unused:_" />
+      </parameters>
+    </profile>
+  </component>
+</project>

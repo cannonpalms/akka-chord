@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ScalaSbtSettings">
+    <option name="customVMPath" />
+    <option name="linkedExternalProjectsSettings">
+      <SbtProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/modules/core" />
+            <option value="$PROJECT_DIR$/modules/core/project" />
+            <option value="$PROJECT_DIR$/modules/demo" />
+            <option value="$PROJECT_DIR$/modules/demo/project" />
+            <option value="$PROJECT_DIR$/modules/dht" />
+            <option value="$PROJECT_DIR$/modules/dht/project" />
+            <option value="$PROJECT_DIR$/project" />
+          </set>
+        </option>
+        <option name="sbtVersion" value="1.3.13" />
+      </SbtProjectSettings>
+    </option>
+  </component>
+</project>

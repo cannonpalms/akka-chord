@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Chordial.iml" filepath="$PROJECT_DIR$/.idea/modules/Chordial.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/chordial-build.iml" filepath="$PROJECT_DIR$/.idea/modules/chordial-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/chordial-core.iml" filepath="$PROJECT_DIR$/.idea/modules/chordial-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/chordial-demo.iml" filepath="$PROJECT_DIR$/.idea/modules/chordial-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/chordial-dht.iml" filepath="$PROJECT_DIR$/.idea/modules/chordial-dht.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core-build.iml" filepath="$PROJECT_DIR$/.idea/modules/core-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/demo-build.iml" filepath="$PROJECT_DIR$/.idea/modules/demo-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dht-build.iml" filepath="$PROJECT_DIR$/.idea/modules/dht-build.iml" />
+    </modules>
+  </component>
+</project>

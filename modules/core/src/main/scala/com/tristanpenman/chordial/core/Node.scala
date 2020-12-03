@@ -91,7 +91,7 @@ final class Node(nodeId: Long,
     */
   private def findPredecessor(queryId: Long, sender: ActorRef): Unit = {
     // The FindPredecessorAlgorithm actor will shutdown immediately after it sends a FindPredecessorAlgorithmOk or
-    // FindPredecessorAlgorithmError message. However, if the future returned by the 'ask' request does not complete
+    // FindPredecessorAlgorithmError message.  However, if the future returned by the 'ask' request does not complete
     // within the timeout period, the actor must be shutdown manually to ensure that it does not run indefinitely.
     val findPredecessorAlgorithm = context.actorOf(FindPredecessorAlgorithm.props(router))
     findPredecessorAlgorithm
