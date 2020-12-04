@@ -26,6 +26,7 @@ final class FindSuccessorAlgorithm(router: ActorRef) extends Actor with ActorLog
 
   def awaitGetSuccessor(delegate: ActorRef): Receive = {
     case GetSuccessorOk(successor) =>
+      log.info(s"Successor found: ${successor.id}. FindSuccessorAlgorithm complete.")
       delegate ! FindSuccessorAlgorithmOk(successor)
       context.stop(self)
 
@@ -38,6 +39,7 @@ final class FindSuccessorAlgorithm(router: ActorRef) extends Actor with ActorLog
 
   def awaitFindPredecessor(delegate: ActorRef): Receive = {
     case FindPredecessorOk(_, predecessor) =>
+      log.info(s"Predecessor found: ${predecessor.id}. Now retrieving successor of ${predecessor.id}.")
       router ! Forward(predecessor.id, predecessor.addr, GetSuccessor)
       context.become(awaitGetSuccessor(delegate))
 

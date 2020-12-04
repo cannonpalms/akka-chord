@@ -33,7 +33,7 @@ final class NotifyAlgorithm extends Actor with ActorLogging {
 
   def awaitGetPredecessor(delegate: ActorRef, node: NodeInfo, candidate: NodeInfo, pointersRef: ActorRef): Receive = {
     case GetPredecessorOk(predecessor) =>
-      if (Interval(predecessor.id + 1, node.id).contains(candidate.id)) {
+      if (Interval(predecessor.id, node.id, inclusiveBegin = false, inclusiveEnd = false).contains(candidate.id)) {
         pointersRef ! UpdatePredecessor(candidate)
         context.become(awaitUpdatePredecessor(delegate))
       } else {

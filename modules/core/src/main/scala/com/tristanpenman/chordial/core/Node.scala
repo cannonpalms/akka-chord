@@ -11,6 +11,7 @@ import com.tristanpenman.chordial.core.algorithms.CheckPredecessorAlgorithm._
 import com.tristanpenman.chordial.core.algorithms.ClosestPrecedingNodeAlgorithm._
 import com.tristanpenman.chordial.core.algorithms.FindPredecessorAlgorithm._
 import com.tristanpenman.chordial.core.algorithms.FindSuccessorAlgorithm._
+import com.tristanpenman.chordial.core.algorithms.FixFingersAlgorithm._
 import com.tristanpenman.chordial.core.algorithms.NotifyAlgorithm._
 import com.tristanpenman.chordial.core.algorithms.StabilisationAlgorithm._
 import com.tristanpenman.chordial.core.algorithms._
@@ -40,10 +41,11 @@ final class Node(nodeId: Long,
   private val idModulus = 1 << keyspaceBits
 
   // Finger table ranges from (nodeId + 2^1) up to (nodeId + 2^(keyspace - 1))
-  private def fingerTableSize = keyspaceBits - 1
+  private def fingerTableSize = keyspaceBits
 
   private val checkPredecessorTimeout = Timeout(2500.milliseconds)
   private val stabiliseTimeout = Timeout(1500.milliseconds)
+  private val fixFingersTimeout = Timeout(1500.milliseconds)
 
   // Check that node ID is reasonable
   require(nodeId >= 0, "ownId must be a non-negative Long value")
@@ -60,8 +62,12 @@ final class Node(nodeId: Long,
   private def newStabilisationAlgorithm(pointersRef: ActorRef) =
     context.actorOf(StabilisationAlgorithm.props(router, nodeInfo, pointersRef, externalRequestTimeout))
 
+  private def newFixFingersAlgorithm(pointersRef: ActorRef) =
+    context.actorOf(FixFingersAlgorithm.props(nodeInfo, pointersRef))
+
   private def closestPrecedingFinger(nodeRef: ActorRef, queryId: Long, replyTo: ActorRef) = {
     val algorithm = context.actorOf(ClosestPrecedingNodeAlgorithm.props(nodeInfo, nodeRef, externalRequestTimeout))
+    log.info(s"BEGIN: $nodeId.closest_preceding_finger($queryId)")
     algorithm
       .ask(ClosestPrecedingNodeAlgorithmStart(queryId))(algorithmTimeout)
       .mapTo[ClosestPrecedingNodeAlgorithmStartResponse]
@@ -94,6 +100,7 @@ final class Node(nodeId: Long,
     // FindPredecessorAlgorithmError message.  However, if the future returned by the 'ask' request does not complete
     // within the timeout period, the actor must be shutdown manually to ensure that it does not run indefinitely.
     val findPredecessorAlgorithm = context.actorOf(FindPredecessorAlgorithm.props(router))
+    log.info(s"BEGIN:  $nodeId.find_predecessor($queryId)")
     findPredecessorAlgorithm
       .ask(FindPredecessorAlgorithmStart(queryId, nodeInfo))(algorithmTimeout)
       .mapTo[FindPredecessorAlgorithmStartResponse]
@@ -124,12 +131,14 @@ final class Node(nodeId: Long,
     // The FindSuccessorAlgorithm actor will shutdown immediately after it sends a FindSuccessorAlgorithmOk or
     // FindSuccessorAlgorithmError message. However, if the future returned by the 'ask' request does not complete
     // within the timeout period, the actor must be shutdown manually to ensure that it does not run indefinitely.
+    log.info(s"BEGIN:  $nodeId.find_successor($queryId)")
     val findSuccessorAlgorithm = context.actorOf(FindSuccessorAlgorithm.props(router))
     findSuccessorAlgorithm
       .ask(FindSuccessorAlgorithmStart(queryId, self))(algorithmTimeout)
       .mapTo[FindSuccessorAlgorithmStartResponse]
       .map {
         case FindSuccessorAlgorithmOk(successor) =>
+          log.info(s"FindSuccessorAlgorithmOk: ${successor.id} --> $sender")
           FindSuccessorOk(queryId, successor)
         case FindSuccessorAlgorithmAlreadyRunning =>
           throw new Exception("FindSuccessorAlgorithm actor already running")
@@ -179,8 +188,8 @@ final class Node(nodeId: Long,
             log.error("CheckPredecessor failed: {}", message)
         }
         .recover {
-          case exception =>
-            log.error("CheckPredecessor recovery failed: {}", exception.getMessage)
+          case ex =>
+            log.error("CheckPredecessor recovery failed: {}", ex.getMessage)
         }
     }
 
@@ -198,27 +207,49 @@ final class Node(nodeId: Long,
             log.error("Stabilisation failed: {}", message)
         }
         .recover {
-          case exception =>
-            log.error("Stabilisation recovery failed: {}", exception.getMessage)
+          case ex =>
+            log.error("Stabilisation recovery failed: {}", ex.getMessage)
         }
     }
 
-  def receiveWhileReady(nodeRef: ActorRef,
+  private def scheduleFixFingers(fixFingersAlgorithmRef: ActorRef) =
+    context.system.scheduler.schedule(500.milliseconds, 500.milliseconds) {
+      fixFingersAlgorithmRef
+        .ask(FixFingersAlgorithmStart)(fixFingersTimeout)
+        .mapTo[FixFingersAlgorithmStartResponse]
+        .map {
+          case FixFingersAlgorithmAlreadyRunning =>
+            log.warning("FixFingers already in progress")
+          case FixFingersAlgorithmOk =>
+            log.info("FixFingers finished")
+          case FixFingersAlgorithmError(message) =>
+            log.error("FixFingers failed: {}", message)
+        }
+        .recover {
+          case ex =>
+            log.error("FixFingers recovery failed: {}", ex.getMessage)
+        }
+    }
+
+  def receiveWhileReady(pointersRef: ActorRef,
                         checkPredecessorAlgorithm: ActorRef,
                         checkPredecessorCancellable: Cancellable,
                         stabilisationAlgorithm: ActorRef,
-                        stabilisationCancellable: Cancellable): Receive = {
+                        stabilisationCancellable: Cancellable,
+                        fixFingersAlgorithm: ActorRef,
+                        fixFingersCancellable: Cancellable): Receive = {
+
     case ClosestPrecedingNode(queryId: Long) =>
-      closestPrecedingFinger(nodeRef, queryId, sender())
+      closestPrecedingFinger(pointersRef, queryId, sender())
 
     case m @ GetId =>
-      nodeRef.ask(m)(externalRequestTimeout).pipeTo(sender())
+      pointersRef.ask(m)(externalRequestTimeout).pipeTo(sender())
 
     case m @ GetPredecessor =>
-      nodeRef.ask(m)(externalRequestTimeout).pipeTo(sender())
+      pointersRef.ask(m)(externalRequestTimeout).pipeTo(sender())
 
     case m @ GetSuccessor =>
-      nodeRef.ask(m)(externalRequestTimeout).pipeTo(sender())
+      pointersRef.ask(m)(externalRequestTimeout).pipeTo(sender())
 
     case FindPredecessor(queryId) =>
       findPredecessor(queryId, sender())
@@ -229,10 +260,12 @@ final class Node(nodeId: Long,
     case Join(seedId, seedAddr, seedRef) =>
       checkPredecessorCancellable.cancel()
       stabilisationCancellable.cancel()
+      fixFingersCancellable.cancel()
 
-      context.stop(nodeRef)
+      context.stop(pointersRef)
       context.stop(checkPredecessorAlgorithm)
       context.stop(stabilisationAlgorithm)
+      context.stop(fixFingersAlgorithm)
 
       val seedInfo = NodeInfo(seedId, seedAddr, seedRef)
       val newPointersRef = newPointers(nodeId, seedInfo)
@@ -243,20 +276,25 @@ final class Node(nodeId: Long,
       val newStabilisationAlgorithmRef = newStabilisationAlgorithm(newPointersRef)
       val newStabilisationCancellable = scheduleStabilisation(newStabilisationAlgorithmRef)
 
+      val newFixFingersAlgorithmRef = newFixFingersAlgorithm(newPointersRef)
+      val newFixFingersCancellable = scheduleFixFingers(newFixFingersAlgorithmRef)
+
       context.become(
         receiveWhileReady(
           newPointersRef,
           newCheckPredecessorAlgorithmRef,
           newCheckPredecessorCancellable,
           newStabilisationAlgorithmRef,
-          newStabilisationCancellable
+          newStabilisationCancellable,
+          newFixFingersAlgorithmRef,
+          newFixFingersCancellable
         )
       )
 
       sender() ! JoinOk
 
     case Notify(candidateId, candidateAddr, candidateRef) =>
-      notify(nodeRef, NodeInfo(candidateId, candidateAddr, candidateRef), sender())
+      notify(pointersRef, NodeInfo(candidateId, candidateAddr, candidateRef), sender())
   }
 
   override def receive: Receive = {
@@ -269,13 +307,18 @@ final class Node(nodeId: Long,
       val newStabilisationAlgorithmRef = newStabilisationAlgorithm(newPointersRef)
       val newStabilisationCancellable = scheduleStabilisation(newStabilisationAlgorithmRef)
 
+      val newFixFingersAlgorithmRef = newFixFingersAlgorithm(newPointersRef)
+      val newFixFingersCancellable = scheduleFixFingers(newFixFingersAlgorithmRef)
+
       context.become(
         receiveWhileReady(
           newPointersRef,
           newCheckPredecessorAlgorithmRef,
           newCheckPredecessorCancellable,
           newStabilisationAlgorithmRef,
-          newStabilisationCancellable
+          newStabilisationCancellable,
+          newFixFingersAlgorithmRef,
+          newFixFingersCancellable
         ))
 
       unstashAll()

@@ -82,7 +82,8 @@ final class StabilisationAlgorithm(router: ActorRef, node: NodeInfo, pointersRef
     case StabilisationAlgorithmStart =>
       sender() ! StabilisationAlgorithmAlreadyRunning
 
-    case GetPredecessorOk(candidate) if Interval(node.id + 1, successor.id).contains(candidate.id) =>
+    case GetPredecessorOk(candidate)
+        if Interval(node.id, successor.id, inclusiveBegin = false, inclusiveEnd = false).contains(candidate.id) =>
       context.become(awaitUpdateSuccessor(replyTo, candidate))
       pointersRef ! UpdateSuccessor(candidate)
 

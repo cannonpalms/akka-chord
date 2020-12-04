@@ -34,10 +34,19 @@ final class ClosestPrecedingNodeAlgorithm(node: NodeInfo, pointersRef: ActorRef,
       sender() ! ClosestPrecedingNodeAlgorithmAlreadyRunning
 
     case GetSuccessorOk(successor) =>
+      log.info(s"Successor to ${node.id} found: ${successor.id}.")
       context.setReceiveTimeout(Duration.Undefined)
       context.become(receive)
+      log.info(s"Checking if ${successor.id} is within interval (${node.id + 1}, $queryId)")
+      val intervalTest =
+        Interval(node.id, queryId, inclusiveBegin = false, inclusiveEnd = false).contains(successor.id)
+      if (intervalTest) {
+        log.info(s"Interval match. Closest preceding node to $queryId is: ${successor.id}.")
+      } else {
+        log.info(s"No interval match. Closest preceding node to $queryId is: ${node.id}.")
+      }
       replyTo ! ClosestPrecedingNodeAlgorithmFinished(
-        if (Interval(node.id + 1, queryId).contains(successor.id))
+        if (intervalTest)
           successor
         else
           node

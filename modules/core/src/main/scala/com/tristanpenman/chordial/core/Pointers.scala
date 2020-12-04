@@ -17,7 +17,8 @@ final class Pointers(nodeId: Long, fingerTableSize: Int, seedNode: NodeInfo, eve
 
   private def receiveWhileReady(successor: NodeInfo,
                                 predecessor: Option[NodeInfo],
-                                fingerTable: Vector[Option[NodeInfo]]): Receive = {
+                                fingerTable: Vector[Option[NodeInfo]],
+                                next: Int): Receive = {
     case GetId =>
       sender() ! GetIdOk(nodeId)
 
@@ -32,17 +33,24 @@ final class Pointers(nodeId: Long, fingerTableSize: Int, seedNode: NodeInfo, eve
     case GetSuccessor =>
       sender() ! GetSuccessorOk(successor)
 
+    case GetNextFingerToFix =>
+      sender() ! GetNextFingerToFixOk(next)
+
+    case IncrementNextFingerToFix =>
+      context.become(receiveWhileReady(successor, predecessor, fingerTable, (next + 1) % fingerTableSize))
+      sender() ! IncrementNextFingerToFixOk
+
     case ResetFinger(index: Int) =>
       if (index < 0 || index >= fingerTableSize) {
         sender() ! ResetFingerInvalidIndex
       } else {
-        context.become(receiveWhileReady(successor, predecessor, fingerTable.updated(index, None)))
+        context.become(receiveWhileReady(successor, predecessor, fingerTable.updated(index, None), next))
         sender() ! ResetFingerOk
         eventStream.publish(FingerReset(nodeId, index))
       }
 
     case ResetPredecessor =>
-      context.become(receiveWhileReady(successor, None, fingerTable))
+      context.become(receiveWhileReady(successor, None, fingerTable, next))
       sender() ! ResetPredecessorOk
       eventStream.publish(PredecessorReset(nodeId))
 
@@ -50,19 +58,19 @@ final class Pointers(nodeId: Long, fingerTableSize: Int, seedNode: NodeInfo, eve
       if (index < 0 || index >= fingerTableSize) {
         sender() ! UpdateFingerInvalidIndex
       } else {
-        context.become(receiveWhileReady(successor, predecessor, fingerTable.updated(index, Some(finger))))
+        context.become(receiveWhileReady(successor, predecessor, fingerTable.updated(index, Some(finger)), next))
         sender() ! UpdateFingerOk
         eventStream.publish(FingerUpdated(nodeId, index, finger.id))
       }
 
     case UpdatePredecessor(newPredecessor) =>
-      context.become(receiveWhileReady(successor, Some(newPredecessor), fingerTable))
+      context.become(receiveWhileReady(successor, Some(newPredecessor), fingerTable, next))
       sender() ! UpdatePredecessorOk
       eventStream.publish(PredecessorUpdated(nodeId, newPredecessor.id))
 
     case UpdateSuccessor(newSuccessor) =>
       if (newSuccessor != successor) {
-        context.become(receiveWhileReady(newSuccessor, predecessor, fingerTable))
+        context.become(receiveWhileReady(newSuccessor, predecessor, fingerTable.updated(0, Some(newSuccessor)), next))
         sender() ! UpdateSuccessorOk
         eventStream.publish(SuccessorUpdated(nodeId, newSuccessor.id))
       } else {
@@ -73,7 +81,7 @@ final class Pointers(nodeId: Long, fingerTableSize: Int, seedNode: NodeInfo, eve
   eventStream.publish(NodeCreated(nodeId, seedNode.id))
 
   override def receive: Receive =
-    receiveWhileReady(seedNode, None, newFingerTable)
+    receiveWhileReady(seedNode, None, newFingerTable, 1)
 }
 
 object Pointers {
@@ -101,6 +109,18 @@ object Pointers {
   case object GetSuccessor extends Request
 
   final case class GetSuccessorOk(successor: NodeInfo) extends GetSuccessorResponse
+
+  case object GetNextFingerToFix extends Request
+
+  sealed trait GetNextFingerToFixResponse extends Response
+
+  final case class GetNextFingerToFixOk(next: Int) extends GetNextFingerToFixResponse
+
+  case object IncrementNextFingerToFix extends Request
+
+  sealed trait IncrementNextFingerToFixResponse extends Response
+
+  case object IncrementNextFingerToFixOk extends IncrementNextFingerToFixResponse
 
   case object ResetPredecessor extends Request
 

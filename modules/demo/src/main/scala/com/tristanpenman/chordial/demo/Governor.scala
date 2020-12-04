@@ -34,7 +34,7 @@ final class Governor(val keyspaceBits: Int) extends Actor with ActorLogging with
   // How long Node should wait until an algorithm is considered to have timed out. This should be significantly
   // longer than the external request timeout, as some algorithms will make multiple external requests before
   // running to completion
-  private val algorithmTimeout = Timeout(Int.MaxValue.milliseconds)
+  private val algorithmTimeout = Timeout(5000.milliseconds)
 
   private val joinRequestTimeout = Timeout(2000.milliseconds)
   private val getSuccessorRequestTimeout = Timeout(2000.milliseconds)
@@ -108,6 +108,7 @@ final class Governor(val keyspaceBits: Int) extends Actor with ActorLogging with
       sender() ! GetNodeIdSetOk(nodes.keySet ++ terminatedNodes)
 
     case GetNodeState(nodeId: Long) =>
+      log.info(s"Governor.GetNodeState: $nodeId")
       if (nodes.contains(nodeId)) {
         sender() ! GetNodeStateOk(true)
       } else if (terminatedNodes.contains(nodeId)) {
@@ -153,11 +154,13 @@ final class Governor(val keyspaceBits: Int) extends Actor with ActorLogging with
     case LookupKey(originNodeId: Long, key: Long) =>
       nodes.get(originNodeId) match {
         case Some(nodeRef) =>
+          log.info(s"Starting lookup from node $originNodeId for key $key")
           nodeRef
             .ask(FindSuccessor(key))(algorithmTimeout)
             .mapTo[FindSuccessorResponse]
             .map {
               case FindSuccessorOk(_, successor) =>
+                log.info(s"Governor received lookup response: ${successor.id}")
                 LookupKeyResponseOk(successor.id)
               case Node.FindSuccessorError(_, message) =>
                 LookupKeyResponseError(message)
@@ -165,6 +168,7 @@ final class Governor(val keyspaceBits: Int) extends Actor with ActorLogging with
             .recover {
               case ex => Failure(ex)
             }
+            .pipeTo(sender())
         case None =>
           if (terminatedNodes.contains(originNodeId)) {
             sender() ! LookupKeyResponseError(s"Node with ID $originNodeId is no longer active")

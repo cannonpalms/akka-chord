@@ -30,12 +30,16 @@ final class FindPredecessorAlgorithm(router: ActorRef) extends Actor with ActorL
 
   def awaitGetSuccessor(queryId: Long, delegate: ActorRef, candidate: NodeInfo): Actor.Receive = {
     case GetSuccessorOk(successor: NodeInfo) =>
+      log.info(s"Successor of ${candidate.id} found: ${successor.id}")
+      log.info(s"Checking if $queryId is within interval (${candidate.id + 1}, ${successor.id + 1})")
       // Check whether the query ID belongs to the candidate node's successor
-      if (Interval(candidate.id + 1, successor.id + 1).contains(queryId)) {
+      if (Interval(candidate.id, successor.id, inclusiveBegin = false, inclusiveEnd = true).contains(queryId)) {
+        log.info("Interval match.")
         // If the query ID belongs to the candidate node's successor, then we have successfully found the predecessor
         delegate ! FindPredecessorAlgorithmOk(candidate)
         context.stop(self)
       } else {
+        log.info(s"No interval match. Finding closest preceding node to $queryId")
         // Otherwise, we need to choose the next node by the asking the current candidate node to return what it knows
         // to be the closest preceding finger for the query ID
         router ! Forward(candidate.id, candidate.addr, ClosestPrecedingNode(queryId))
@@ -51,6 +55,7 @@ final class FindPredecessorAlgorithm(router: ActorRef) extends Actor with ActorL
 
   def awaitClosestPrecedingNode(queryId: Long, delegate: ActorRef): Actor.Receive = {
     case ClosestPrecedingNodeOk(candidate) =>
+      log.info(s"Closest preceding node of $queryId: ${candidate.id}")
       // Now that we have the ID and ActorRef for the next candidate node, we can proceed to the next step of the
       // algorithm. This requires that we locate the successor of the candidate node.
       router ! Forward(candidate.id, candidate.addr, GetSuccessor)
