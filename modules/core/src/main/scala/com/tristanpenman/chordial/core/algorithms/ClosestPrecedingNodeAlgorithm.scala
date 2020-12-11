@@ -2,10 +2,11 @@ package com.tristanpenman.chordial.core.algorithms
 
 import akka.actor.{Actor, ActorLogging, ActorRef, Props, ReceiveTimeout}
 import akka.util.Timeout
-import com.tristanpenman.chordial.core.Pointers.{GetSuccessor, GetSuccessorOk}
+import com.tristanpenman.chordial.core.Pointers.{GetFingerTable, GetFingerTableOk}
 import com.tristanpenman.chordial.core.shared.{Interval, NodeInfo}
 
 import scala.concurrent.duration.Duration
+import scala.util.control.Breaks._
 
 /**
   * Actor class that implements a simplified version of the ClosestPrecedingNode algorithm
@@ -23,50 +24,57 @@ import scala.concurrent.duration.Duration
   * The algorithm implemented here behaves as though the node has a finger table of size 2, with the first entry being
   * the node's successor, and the second entry being the node itself.
   */
-final class ClosestPrecedingNodeAlgorithm(node: NodeInfo, pointersRef: ActorRef, extTimeout: Timeout)
+final class ClosestPrecedingNodeAlgorithm(node: NodeInfo,
+                                          pointersRef: ActorRef,
+                                          fingerTableSize: Int,
+                                          extTimeout: Timeout)
     extends Actor
     with ActorLogging {
 
   import ClosestPrecedingNodeAlgorithm._
 
-  private def running(queryId: Long, replyTo: ActorRef): Receive = {
+  private def reset = {
+    context.setReceiveTimeout(Duration.Undefined)
+    context.become(receive)
+  }
+
+  private def awaitFinger(queryId: Long, replyTo: ActorRef): Receive = {
+    case GetFingerTableOk(fingerTable) =>
+      var done = false
+      breakable
+      {
+        for (k <- fingerTable.size - 1 to 0 by -1) {
+          val interval = Interval(node.id, queryId, inclusiveBegin = false, inclusiveEnd = false)
+          if (interval.contains(fingerTable(k).id)) {
+//            log.info(s"[queryId: $queryId] - Send ClosestPrecedingNodeAlgorithmFinished(${fingerTable(k).id}) (in loop)")
+            replyTo ! ClosestPrecedingNodeAlgorithmFinished(fingerTable(k))
+//            reset
+                      context.stop(self)
+            done = true
+            break
+          }
+        }
+      }
+      if (!done) {
+//        log.info(s"[queryId: $queryId] - Send ClosestPrecedingNodeAlgorithmFinished(${node.id}) (after loop)")
+        replyTo ! ClosestPrecedingNodeAlgorithmFinished(node)
+//                reset
+        context.stop(self)
+      }
+
     case ClosestPrecedingNodeAlgorithmStart(_) =>
       sender() ! ClosestPrecedingNodeAlgorithmAlreadyRunning
 
-    case GetSuccessorOk(successor) =>
-      log.info(s"Successor to ${node.id} found: ${successor.id}.")
-      context.setReceiveTimeout(Duration.Undefined)
-      context.become(receive)
-      log.info(s"Checking if ${successor.id} is within interval (${node.id + 1}, $queryId)")
-      val intervalTest =
-        Interval(node.id, queryId, inclusiveBegin = false, inclusiveEnd = false).contains(successor.id)
-      if (intervalTest) {
-        log.info(s"Interval match. Closest preceding node to $queryId is: ${successor.id}.")
-      } else {
-        log.info(s"No interval match. Closest preceding node to $queryId is: ${node.id}.")
-      }
-      replyTo ! ClosestPrecedingNodeAlgorithmFinished(
-        if (intervalTest)
-          successor
-        else
-          node
-      )
-
-    case ReceiveTimeout =>
-      context.setReceiveTimeout(Duration.Undefined)
-      context.become(receive)
-      replyTo ! ClosestPrecedingNodeAlgorithmError("timed out")
+//    case ReceiveTimeout =>
+//      reset
+//      replyTo ! ClosestPrecedingNodeAlgorithmError(s"{node.id}.ClosestPrecedingNode($queryId) timed out")
   }
 
   override def receive: Receive = {
-    case ClosestPrecedingNodeAlgorithmStart(queryId: Long) =>
-      context.become(running(queryId, sender()))
-      context.setReceiveTimeout(extTimeout.duration)
-      pointersRef ! GetSuccessor
-
-    case ReceiveTimeout =>
-      // timeout from an earlier request that was completed before the timeout message was processed
-      log.debug("late timeout")
+    case ClosestPrecedingNodeAlgorithmStart(queryId) =>
+      pointersRef ! GetFingerTable
+      context.become(awaitFinger(queryId, sender()))
+//      context.setReceiveTimeout(extTimeout.duration)
   }
 }
 
@@ -90,7 +98,7 @@ object ClosestPrecedingNodeAlgorithm {
 
   case object ClosestPrecedingNodeAlgorithmReady extends ClosestPrecedingNodeAlgorithmResetResponse
 
-  def props(node: NodeInfo, pointersRef: ActorRef, extTimeout: Timeout): Props =
-    Props(new ClosestPrecedingNodeAlgorithm(node, pointersRef, extTimeout))
+  def props(node: NodeInfo, pointersRef: ActorRef, fingerTableSize: Int, extTimeout: Timeout): Props =
+    Props(new ClosestPrecedingNodeAlgorithm(node, pointersRef, fingerTableSize, extTimeout: Timeout))
 
 }

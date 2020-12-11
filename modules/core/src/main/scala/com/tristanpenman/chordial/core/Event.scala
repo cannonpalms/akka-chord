@@ -18,4 +18,10 @@ object Event {
 
   final case class SuccessorUpdated(nodeId: Long, successorId: Long) extends Event
 
+  final case class LookupStarted(nodeId: Long, queryId: Long, lookupId: Long) extends Event
+
+  final case class NodeVisitedByLookup(nodeId: Long, queryId: Long, lookupId: Long) extends Event
+
+  final case class LookupCompleted(nodeId: Long, queryId: Long, successorId: Long, lookupId: Long) extends Event
+
 }

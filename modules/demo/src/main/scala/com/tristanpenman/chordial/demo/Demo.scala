@@ -21,17 +21,21 @@ object Demo extends App {
 
   // Generate IDs ranging from 0 to 63 (inclusive) so that when visualising the network,
   // each node represents a ~5.625 degree arc on the ring
-  private val keyspaceBits = 6
+  private val keyspaceBits = 10
 
   // Create an actor that is responsible for creating and terminating nodes, while ensuring
   // that nodes are assigned unique IDs in the Chord key-space
   private val governor = system.actorOf(Governor.props(keyspaceBits), "Governor")
 
-  // Create an actor that will log events published by nodes
+  // Create an actor that will  log events published by nodes
   private val eventWriter = system.actorOf(EventWriter.props, "EventWriter")
 
-  // Subscribe the EventWriter actor to events published by nodes
+  // Create an actor that will keep track of simulation metrics such as path length
+  private val simulationTracker = system.actorOf(SimulationTracker.props, "SimulationTracker")
+
+  // Subscribe the EventWriter and SimulationTracker actors to events published by nodes
   system.eventStream.subscribe(eventWriter, classOf[Event])
+  system.eventStream.subscribe(simulationTracker, classOf[Event])
 
   val (listener, eventsSource) =
     Source

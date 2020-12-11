@@ -85,6 +85,7 @@ trait WebService {
       }
 
   private def lookup(governor: ActorRef, originNodeId: Long, key: Long): Future[NodeAttributes] =
+    // generate unique ID for lookup event and pass it to the governor
     governor
       .ask(LookupKey(originNodeId, key))
       .mapTo[LookupKeyResponse]

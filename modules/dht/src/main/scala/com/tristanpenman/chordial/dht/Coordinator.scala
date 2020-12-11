@@ -3,7 +3,7 @@ package com.tristanpenman.chordial.dht
 import akka.actor.{Actor, ActorLogging, Props}
 import akka.util.Timeout
 import com.tristanpenman.chordial.core.Router.{Start, StartFailed, StartOk}
-import com.tristanpenman.chordial.core.{Node, Router}
+import com.tristanpenman.chordial.core.{ChordConfig, Node, Router}
 
 import scala.concurrent.ExecutionContextExecutor
 import scala.concurrent.duration._
@@ -28,15 +28,27 @@ class Coordinator(keyspaceBits: Int, nodeAddress: String, nodePort: Int, seedNod
   // How long to wait when making requests that may be routed to other nodes
   private val externalRequestTimeout = Timeout(500.milliseconds)
 
+  private val config = ChordConfig(
+    keyspaceBits = keyspaceBits,
+    algorithmTimeout = algorithmTimeout,
+    externalRequestTimeout = externalRequestTimeout,
+    checkPredecessorDelay = 300.millis,
+    checkPredecessorTimeout = Timeout(2500.millis),
+    stabilizationDelay = 200.millis,
+    stabilizationTimeout = Timeout(1500.millis),
+    fixFingersDelay = 2000.millis,
+    fixFingersTimeout = Timeout(5000.millis)
+  )
+
   // Start the router
   private val router = system.actorOf(Router.props())
   router ! Start(nodeAddress, nodePort)
 
   seedNode match {
     case Some(value) =>
-      log.info(s"seed node: ${value}")
+      // // log.info(s"seed node: ${value}")
     case _ =>
-      log.info("not using a seed node")
+      // // log.info("not using a seed node")
   }
 
   def ready: Receive = {
@@ -52,9 +64,7 @@ class Coordinator(keyspaceBits: Int, nodeAddress: String, nodePort: Int, seedNod
       val firstNodeName = s"node:${firstNodeId}"
       system.actorOf(Node.props(firstNodeId,
                                 localAddress,
-                                keyspaceBits,
-                                algorithmTimeout,
-                                externalRequestTimeout,
+                                config,
                                 system.eventStream,
                                 router),
                      firstNodeName)

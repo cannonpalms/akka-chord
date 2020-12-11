@@ -20,13 +20,13 @@ import com.tristanpenman.chordial.core.shared.NodeInfo
   * Although the algorithm is defined a way that allows 'find_predecessor' to be performed as an ordinary method call,
   * this class performs the operation by sending a message to an ActorRef and awaiting a response.
   */
-final class FindSuccessorAlgorithm(router: ActorRef) extends Actor with ActorLogging {
+final class FindSuccessorAlgorithm(router: ActorRef, lookupId: Option[Long]) extends Actor with ActorLogging {
 
   import FindSuccessorAlgorithm._
 
   def awaitGetSuccessor(delegate: ActorRef): Receive = {
     case GetSuccessorOk(successor) =>
-      log.info(s"Successor found: ${successor.id}. FindSuccessorAlgorithm complete.")
+      // log.info(s"Successor found: ${successor.id}. FindSuccessorAlgorithm complete.")
       delegate ! FindSuccessorAlgorithmOk(successor)
       context.stop(self)
 
@@ -39,7 +39,7 @@ final class FindSuccessorAlgorithm(router: ActorRef) extends Actor with ActorLog
 
   def awaitFindPredecessor(delegate: ActorRef): Receive = {
     case FindPredecessorOk(_, predecessor) =>
-      log.info(s"Predecessor found: ${predecessor.id}. Now retrieving successor of ${predecessor.id}.")
+      // log.info(s"Predecessor found: ${predecessor.id}. Now retrieving successor of ${predecessor.id}.")
       router ! Forward(predecessor.id, predecessor.addr, GetSuccessor)
       context.become(awaitGetSuccessor(delegate))
 
@@ -56,7 +56,8 @@ final class FindSuccessorAlgorithm(router: ActorRef) extends Actor with ActorLog
 
   override def receive: Receive = {
     case FindSuccessorAlgorithmStart(queryId: Long, node: ActorRef) =>
-      node ! FindPredecessor(queryId)
+      // log.info(s"FindPredecessor($queryId)")
+      node ! FindPredecessor(queryId, lookupId)
       context.become(awaitFindPredecessor(sender()))
 
     case message =>
@@ -76,5 +77,5 @@ object FindSuccessorAlgorithm {
 
   final case class FindSuccessorAlgorithmError(message: String) extends FindSuccessorAlgorithmStartResponse
 
-  def props(router: ActorRef): Props = Props(new FindSuccessorAlgorithm(router))
+  def props(router: ActorRef, lookupId: Option[Long] = None): Props = Props(new FindSuccessorAlgorithm(router, lookupId))
 }

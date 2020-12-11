@@ -5,19 +5,21 @@
       <change beforePath="$PROJECT_DIR$/.idea/modules/chordial-core.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/chordial-core.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules/chordial-demo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/chordial-demo.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules/chordial-dht.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/chordial-dht.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sbt.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sbt.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Event.scala" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Event.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Node.scala" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Node.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Pointers.scala" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Pointers.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/ClosestPrecedingNodeAlgorithm.scala" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/ClosestPrecedingNodeAlgorithm.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FindPredecessorAlgorithm.scala" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FindPredecessorAlgorithm.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FindSuccessorAlgorithm.scala" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FindSuccessorAlgorithm.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/NotifyAlgorithm.scala" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/NotifyAlgorithm.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/StabilisationAlgorithm.scala" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/StabilisationAlgorithm.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/shared/Interval.scala" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/shared/Interval.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/core/src/test/scala/com/tristanpenman/chordial/core/algorithms/CheckPredecessorAlgorithmSpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/src/test/scala/com/tristanpenman/chordial/core/algorithms/CheckPredecessorAlgorithmSpec.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/core/src/test/scala/com/tristanpenman/chordial/core/algorithms/StabilisationAlgorithmSpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/src/test/scala/com/tristanpenman/chordial/core/algorithms/StabilisationAlgorithmSpec.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FixFingersAlgorithm.scala" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FixFingersAlgorithm.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/core/src/test/scala/com/tristanpenman/chordial/core/algorithms/ClosestPrecedingNodeAlgorithmSpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/src/test/scala/com/tristanpenman/chordial/core/algorithms/ClosestPrecedingNodeAlgorithmSpec.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/demo/src/main/resources/webapp/websocket.html" beforeDir="false" afterPath="$PROJECT_DIR$/modules/demo/src/main/resources/webapp/websocket.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/Demo.scala" beforeDir="false" afterPath="$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/Demo.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/EventWriter.scala" beforeDir="false" afterPath="$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/EventWriter.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/Governor.scala" beforeDir="false" afterPath="$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/Governor.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/WebService.scala" beforeDir="false" afterPath="$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/WebService.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/dht/src/main/scala/com/tristanpenman/chordial/dht/Coordinator.scala" beforeDir="false" afterPath="$PROJECT_DIR$/modules/dht/src/main/scala/com/tristanpenman/chordial/dht/Coordinator.scala" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/project/project/target/" />
@@ -74,183 +76,264 @@
     <session id="-461889258">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="5" />
           <entry key="project.open.time.1" value="1" />
-          <entry key="project.open.time.12" value="1" />
+          <entry key="project.open.time.10" value="1" />
+          <entry key="project.open.time.12" value="2" />
           <entry key="project.open.time.8" value="2" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.open.time.9" value="1" />
+          <entry key="project.opened" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="LICENSE" value="1" />
           <entry key="conf" value="1" />
-          <entry key="html" value="1" />
-          <entry key="java" value="2" />
+          <entry key="html" value="2" />
+          <entry key="java" value="6" />
+          <entry key="js" value="1" />
           <entry key="properties" value="1" />
           <entry key="sbt" value="3" />
-          <entry key="scala" value="141" />
+          <entry key="scala" value="243" />
           <entry key="yml" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="HOCON" value="1" />
-          <entry key="HTML" value="1" />
-          <entry key="JAVA" value="2" />
+          <entry key="HTML" value="2" />
+          <entry key="JAVA" value="6" />
+          <entry key="JavaScript" value="1" />
           <entry key="PLAIN_TEXT" value="1" />
           <entry key="Properties" value="1" />
-          <entry key="Scala" value="141" />
+          <entry key="Scala" value="243" />
           <entry key="YAML" value="1" />
           <entry key="sbt" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
+          <entry key="html" value="1" />
           <entry key="sbtShell" value="72" />
-          <entry key="scala" value="12317" />
+          <entry key="scala" value="25252" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Scala" value="12317" />
+          <entry key="HTML" value="1" />
+          <entry key="Scala" value="25252" />
           <entry key="sbtShell" value="72" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FixFingersAlgorithm.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="57" column="48" lean-forward="true" selection-start-line="57" selection-start-column="48" selection-end-line="57" selection-end-column="48" />
-              <folding>
-                <element signature="e#52#108#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/ClosestPrecedingNodeAlgorithm.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="69" column="3" lean-forward="true" selection-start-line="69" selection-start-column="3" selection-end-line="69" selection-end-column="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/Governor.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="144" column="31" lean-forward="true" selection-start-line="144" selection-start-column="31" selection-end-line="144" selection-end-column="31" />
-              <folding>
-                <element signature="e#41#74#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FindPredecessorAlgorithm.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="311">
-              <caret line="58" column="6" selection-start-line="58" selection-start-column="6" selection-end-line="58" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FindSuccessorAlgorithm.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="42" column="4" lean-forward="true" selection-start-line="42" selection-start-column="4" selection-end-line="42" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Pointers.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="24" column="26" lean-forward="true" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
-              <folding>
-                <element signature="e#41#60#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Node.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="242" column="60" lean-forward="true" selection-start-line="242" selection-start-column="60" selection-end-line="242" selection-end-column="60" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/StabilisationAlgorithm.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="56" column="29" lean-forward="true" selection-start-line="56" selection-start-column="29" selection-end-line="56" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/Demo.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="37" column="58" lean-forward="true" selection-start-line="37" selection-start-column="58" selection-end-line="37" selection-end-column="58" />
-              <folding>
-                <element signature="e#41#70#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Node.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="3944">
+                  <caret line="253" column="46" selection-start-line="253" selection-start-column="46" selection-end-line="253" selection-end-column="46" />
+                  <folding>
+                    <element signature="e#41#74#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/shared/NodeInfo.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="51">
+                  <caret line="5" selection-start-line="5" selection-end-line="5" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FindPredecessorAlgorithm.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1649">
+                  <caret line="103" column="64" selection-start-line="103" selection-start-column="64" selection-end-line="103" selection-end-column="64" />
+                  <folding>
+                    <element signature="e#52#108#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Event.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="306">
+                  <caret line="18" column="81" selection-start-line="18" selection-start-column="81" selection-end-line="18" selection-end-column="81" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/Governor.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="594">
+                  <caret line="64" column="8" selection-start-line="64" selection-start-column="8" selection-end-line="64" selection-end-column="8" />
+                  <folding>
+                    <element signature="e#41#74#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/StabilisationAlgorithm.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="714">
+                  <caret line="103" column="39" selection-start-line="103" selection-start-column="39" selection-end-line="103" selection-end-column="39" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FixFingersAlgorithm.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="119">
+                  <caret line="61" column="49" lean-forward="true" selection-start-line="61" selection-start-column="49" selection-end-line="61" selection-end-column="49" />
+                  <folding>
+                    <element signature="e#52#108#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/Demo.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="459">
+                  <caret line="37" column="65" selection-start-line="37" selection-start-column="65" selection-end-line="37" selection-end-column="65" />
+                  <folding>
+                    <element signature="e#41#70#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/SimulationTracker.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="306">
+                  <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
+                  <folding>
+                    <element signature="e#41#87#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Pointers.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="352">
+                  <caret line="75" column="52" lean-forward="true" selection-start-line="75" selection-start-column="52" selection-end-line="75" selection-end-column="52" />
+                  <folding>
+                    <element signature="e#41#60#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Node.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="284">
+                  <caret line="386" column="16" selection-start-line="386" selection-start-column="13" selection-end-line="386" selection-end-column="16" />
+                  <folding>
+                    <element signature="e#41#74#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/modules/dht/src/main/scala/com/tristanpenman/chordial/dht/Coordinator.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="612">
+                  <caret line="43" column="19" selection-start-line="43" selection-start-column="19" selection-end-line="43" selection-end-column="19" />
+                  <folding>
+                    <element signature="e#40#86#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/ChordConfig.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="204">
+                  <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
+                  <folding>
+                    <element signature="e#40#64#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/EventWriter.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="255">
+                  <caret line="15" column="93" selection-start-line="15" selection-start-column="93" selection-end-line="15" selection-end-column="93" />
+                  <folding>
+                    <element signature="e#41#87#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Starting loo</find>
-      <find>Lookup</find>
-      <find>Checking if</find>
-      <find>Successor of</find>
-      <find>FindSuccessorAlgorithm complete</find>
-      <find>FindSuccessorAlgorithmOk</find>
-      <find>FindSuccessorOk</find>
-      <find>Governor received</find>
-      <find>GetPredecessorOkButUnknown</find>
-      <find>ResetFinger</find>
-      <find>REeset</find>
-      <find>node</find>
-      <find>NotifyAlgorithmOk</find>
-      <find>requestTimeout</find>
-      <find>FixFingersAlgorithmOk</find>
+      <find>ClosestPrecedingNode</find>
+      <find>eventStream.p</find>
+      <find>FindPredecessor</find>
       <find>FindSuccessor</find>
-      <find>NExtFingerToFix</find>
-      <find>2\^</find>
-      <find>fingerTableSize</find>
-      <find>keyspaceBits</find>
-      <find>node.ref</find>
-      <find>finger</find>
-      <find>fingerTableSi</find>
-      <find>apply</find>
-      <find>ec</find>
-      <find>\).contains</find>
-      <find>UpdateFinger</find>
-      <find>stop</find>
-      <find>log.info</find>
-      <find>lookup</find>
+      <find>Optional</find>
+      <find>fINDpRE</find>
+      <find>nodeId</find>
+      <find>nodeInfo</find>
+      <find>findSuccessor</find>
+      <find>FixFinger</find>
+      <find>ClosestPre</find>
+      <find>in progress</find>
+      <find>warning</find>
+      <find>FixFin</find>
+      <find>Poison</find>
+      <find>algorith</find>
+      <find>scheduleFixFin</find>
+      <find>fixFingersTimeout</find>
+      <find>schedul</find>
+      <find>algorithmTimeout</find>
+      <find>rng</find>
+      <find>eventId</find>
+      <find>Map</find>
+      <find>getSuccessorRequ</find>
+      <find>updated</find>
+      <find>LookupCompleted</find>
+      <find>schedule</find>
+      <find>fix</find>
+      <find>nextFinger</find>
+      <find>receiveWhileReady</find>
     </findStrings>
     <replaceStrings>
       <replace>{seed_id}</replace>
+      <replace>// $1</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -259,19 +342,27 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/Demo.scala" />
-        <option value="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Event.scala" />
-        <option value="$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/WebService.scala" />
-        <option value="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Pointers.scala" />
         <option value="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/shared/Interval.scala" />
-        <option value="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/StabilisationAlgorithm.scala" />
         <option value="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/NotifyAlgorithm.scala" />
         <option value="$PROJECT_DIR$/modules/core/src/test/scala/com/tristanpenman/chordial/core/shared/IntervalSpec.scala" />
-        <option value="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Node.scala" />
-        <option value="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FindPredecessorAlgorithm.scala" />
-        <option value="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FindSuccessorAlgorithm.scala" />
+        <option value="$PROJECT_DIR$/modules/core/src/test/scala/com/tristanpenman/chordial/core/algorithms/ClosestPrecedingNodeAlgorithmSpec.scala" />
+        <option value="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/StabilisationAlgorithm.scala" />
+        <option value="$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/WebSocketWorker.scala" />
+        <option value="$PROJECT_DIR$/modules/demo/src/main/resources/webapp/websocket.html" />
+        <option value="$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/WebService.scala" />
         <option value="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/ClosestPrecedingNodeAlgorithm.scala" />
+        <option value="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/ChordConfig.scala" />
+        <option value="$PROJECT_DIR$/modules/dht/src/main/scala/com/tristanpenman/chordial/dht/Coordinator.scala" />
+        <option value="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FindSuccessorAlgorithm.scala" />
+        <option value="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FindPredecessorAlgorithm.scala" />
+        <option value="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Event.scala" />
+        <option value="$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/SimulationMetricTracker.scala" />
+        <option value="$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/Demo.scala" />
+        <option value="$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/SimulationTracker.scala" />
+        <option value="$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/EventWriter.scala" />
+        <option value="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Node.scala" />
         <option value="$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/Governor.scala" />
+        <option value="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Pointers.scala" />
         <option value="$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FixFingersAlgorithm.scala" />
       </list>
     </option>
@@ -283,9 +374,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-7" />
-    <option name="width" value="974" />
-    <option name="height" value="1057" />
+    <option name="x" value="-8" />
+    <option name="width" value="1300" />
+    <option name="height" value="1066" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -295,6 +386,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -374,55 +466,6 @@
               <item name="Chordial" type="b2602c69:ProjectViewProjectNode" />
               <item name="chordial" type="462c0819:PsiDirectoryNode" />
               <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Chordial" type="b2602c69:ProjectViewProjectNode" />
-              <item name="chordial" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="scala" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Chordial" type="b2602c69:ProjectViewProjectNode" />
-              <item name="chordial" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="scala" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Chordial" type="b2602c69:ProjectViewProjectNode" />
-              <item name="chordial" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="scala" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="algorithms" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Chordial" type="b2602c69:ProjectViewProjectNode" />
-              <item name="chordial" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="scala" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="shared" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Chordial" type="b2602c69:ProjectViewProjectNode" />
-              <item name="chordial" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
               <item name="demo" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -490,12 +533,12 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="full.screen.before.presentation.mode" value="false" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Project" />
@@ -684,7 +727,10 @@
       <workItem from="1606957843014" duration="2037000" />
       <workItem from="1607023678344" duration="9407000" />
       <workItem from="1607033148327" duration="5110000" />
-      <workItem from="1607058154558" duration="3791000" />
+      <workItem from="1607058154558" duration="25534000" />
+      <workItem from="1607457198987" duration="14817000" />
+      <workItem from="1607623803533" duration="6822000" />
+      <workItem from="1607645948636" duration="625000" />
     </task>
     <servers />
   </component>
@@ -706,24 +752,24 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35468000" />
+    <option name="totallyTimeSpent" value="79475000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16471216" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20682302" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Learn" order="3" weight="0.32995737" />
       <window_info id="Favorites" order="4" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="0" weight="0.32939914" />
+      <window_info anchor="bottom" id="Messages" order="0" weight="0.32832617" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32939914" />
-      <window_info anchor="bottom" id="Run" order="3" weight="0.32939914" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" visible="true" weight="0.38412017" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info active="true" anchor="bottom" id="Debug" order="6" visible="true" weight="0.39914164" />
+      <window_info anchor="bottom" id="Debug" order="6" weight="0.39806867" />
       <window_info anchor="bottom" id="TODO" order="7" />
       <window_info anchor="bottom" id="sbt-shell-toolwindow" order="8" sideWeight="0.49946696" weight="0.32939914" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
@@ -732,36 +778,36 @@
       <window_info anchor="bottom" id="Version Control" order="12" weight="0.32939914" />
       <window_info anchor="bottom" id="Build" order="13" sideWeight="0.49946696" weight="0.305794" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25586355" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Gradle" order="3" />
-      <window_info anchor="right" id="sbt" order="4" weight="0.32995737" />
-      <window_info anchor="right" id="Palette&#9;" order="5" />
-      <window_info anchor="right" id="Database" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="4" />
+      <window_info anchor="right" id="Database" order="5" />
+      <window_info anchor="right" id="sbt" order="6" weight="0.32995737" />
       <window_info anchor="right" id="Maven Projects" order="7" />
     </layout>
     <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15938166" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19829424" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Learn" order="3" weight="0.32995737" />
       <window_info id="Favorites" order="4" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="0" weight="0.32939914" />
+      <window_info anchor="bottom" id="Messages" order="0" weight="0.32832617" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32939914" />
-      <window_info anchor="bottom" id="Run" order="3" weight="0.32939914" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" visible="true" weight="0.35729614" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Debug" order="6" weight="0.39914164" />
+      <window_info anchor="bottom" id="Debug" order="6" weight="0.39806867" />
       <window_info anchor="bottom" id="TODO" order="7" />
       <window_info anchor="bottom" id="sbt-shell-toolwindow" order="8" sideWeight="0.49946696" weight="0.32939914" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="10" weight="0.33154505" />
-      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50053304" side_tool="true" weight="0.32939914" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50053304" side_tool="true" weight="0.305794" />
       <window_info anchor="bottom" id="Version Control" order="12" weight="0.32939914" />
-      <window_info anchor="bottom" id="Build" order="13" weight="0.305794" />
+      <window_info anchor="bottom" id="Build" order="13" sideWeight="0.49946696" weight="0.305794" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" visible="true" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Gradle" order="3" />
       <window_info anchor="right" id="sbt" order="4" weight="0.32995737" />
@@ -781,63 +827,43 @@
       <breakpoints>
         <line-breakpoint type="scala-line">
           <url>file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FindPredecessorAlgorithm.scala</url>
-          <line>75</line>
+          <line>82</line>
           <properties />
           <option name="timeStamp" value="53" />
         </line-breakpoint>
         <line-breakpoint type="scala-line">
-          <url>file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FindSuccessorAlgorithm.scala</url>
-          <line>40</line>
-          <properties />
-          <option name="timeStamp" value="55" />
-        </line-breakpoint>
-        <line-breakpoint type="scala-line">
-          <url>file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FindSuccessorAlgorithm.scala</url>
-          <line>45</line>
-          <properties />
-          <option name="timeStamp" value="56" />
-        </line-breakpoint>
-        <line-breakpoint type="scala-line">
-          <url>file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FindSuccessorAlgorithm.scala</url>
-          <line>57</line>
-          <properties />
-          <option name="timeStamp" value="59" />
-        </line-breakpoint>
-        <line-breakpoint type="scala-line">
           <url>file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FindPredecessorAlgorithm.scala</url>
-          <line>34</line>
+          <line>41</line>
           <properties />
           <option name="timeStamp" value="61" />
         </line-breakpoint>
         <line-breakpoint type="scala-line">
           <url>file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FindPredecessorAlgorithm.scala</url>
-          <line>59</line>
+          <line>66</line>
           <properties />
           <option name="timeStamp" value="62" />
         </line-breakpoint>
         <line-breakpoint type="scala-line">
           <url>file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FindPredecessorAlgorithm.scala</url>
-          <line>63</line>
+          <line>70</line>
           <properties />
           <option name="timeStamp" value="63" />
         </line-breakpoint>
-        <line-breakpoint type="scala-line">
-          <url>file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FindSuccessorAlgorithm.scala</url>
-          <line>27</line>
+        <line-breakpoint enabled="true" type="scala-line">
+          <url>file://$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/EventWriter.scala</url>
+          <line>16</line>
           <properties />
-          <option name="timeStamp" value="68" />
-        </line-breakpoint>
-        <line-breakpoint type="scala-line">
-          <url>file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/ClosestPrecedingNodeAlgorithm.scala</url>
-          <line>61</line>
-          <properties />
-          <option name="timeStamp" value="70" />
+          <option name="timeStamp" value="69" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
     </breakpoint-manager>
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
@@ -874,55 +900,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/modules/demo/build.sbt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-stream_2.13/2.5.31/akka-stream_2.13-2.5.31-sources.jar!/akka/stream/OverflowStrategy.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="127" column="31" selection-start-line="127" selection-start-column="31" selection-end-line="127" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-stream_2.13/2.5.31/akka-stream_2.13-2.5.31-sources.jar!/akka/stream/Attributes.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="546" column="4" selection-start-line="546" selection-start-column="4" selection-end-line="546" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-stream_2.13/2.5.31/akka-stream_2.13-2.5.31-sources.jar!/akka/stream/scaladsl/Hub.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="330" column="62" selection-start-line="330" selection-start-column="62" selection-end-line="330" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-stream_2.13/2.5.31/akka-stream_2.13-2.5.31-sources.jar!/akka/stream/scaladsl/Materialization.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="20" column="37" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-stream_2.13/2.5.31/akka-stream_2.13-2.5.31-sources.jar!/akka/stream/scaladsl/Source.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="82" column="4" selection-start-line="82" selection-start-column="4" selection-end-line="82" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-stream_2.13/2.5.31/akka-stream_2.13-2.5.31-sources.jar!/akka/stream/scaladsl/Flow.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="628" column="56" selection-start-line="628" selection-start-column="56" selection-end-line="628" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-actor_2.13/2.5.31/akka-actor_2.13-2.5.31-sources.jar!/akka/event/EventStream.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="178">
@@ -993,13 +970,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/WebSocketWorker.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="24" column="4" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.2/scala-library-2.13.2-sources.jar!/scala/util/Try.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -1028,38 +998,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/demo/src/main/resources/webapp/websocket.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="478">
-          <caret line="177" column="26" selection-start-line="177" selection-start-column="26" selection-end-line="177" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Event.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="82" selection-start-line="18" selection-start-column="82" selection-end-line="18" selection-end-column="82" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/shared/NodeInfo.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/java.base/java/lang/ref/Reference.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="382">
           <caret line="175" column="43" selection-start-line="175" selection-start-column="43" selection-end-line="175" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/WebService.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="80" column="12" lean-forward="true" selection-start-line="80" selection-start-column="12" selection-end-line="80" selection-end-column="12" />
         </state>
       </provider>
     </entry>
@@ -1077,20 +1019,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/dht/src/main/scala/com/tristanpenman/chordial/dht/Coordinator.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="36" column="6" selection-start-line="36" selection-start-column="6" selection-end-line="36" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/CheckPredecessorAlgorithm.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="31" column="12" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/core/src/test/scala/com/tristanpenman/chordial/core/algorithms/CheckPredecessorAlgorithmSpec.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -1102,13 +1030,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="524" column="6" selection-start-line="524" selection-start-column="6" selection-end-line="524" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/EventWriter.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
         </state>
       </provider>
     </entry>
@@ -1147,102 +1068,222 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/core/src/test/scala/com/tristanpenman/chordial/core/algorithms/ClosestPrecedingNodeAlgorithmSpec.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="76" column="33" selection-start-line="76" selection-start-column="33" selection-end-line="76" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/core/src/test/scala/com/tristanpenman/chordial/core/shared/IntervalSpec.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="91" column="9" lean-forward="true" selection-start-line="91" selection-start-column="9" selection-end-line="91" selection-end-column="9" />
-          <folding>
-            <element signature="e#48#96#0" expanded="true" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-actor_2.13/2.5.31/akka-actor_2.13-2.5.31-sources.jar!/akka/actor/ActorRef.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="103" column="15" selection-start-line="103" selection-start-column="15" selection-end-line="103" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/demo/src/main/resources/webapp/lib/d3/d3.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="1433" column="20" selection-start-line="1433" selection-start-column="20" selection-end-line="1433" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/core/src/test/scala/com/tristanpenman/chordial/core/algorithms/ClosestPrecedingNodeAlgorithmSpec.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="73" column="22" selection-start-line="73" selection-start-column="22" selection-end-line="73" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/NotifyAlgorithm.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="35" column="33" selection-start-line="35" selection-start-column="33" selection-end-line="35" selection-end-column="33" />
+        <state relative-caret-position="272">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/Demo.scala">
+    <entry file="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.2/scala-library-2.13.2-sources.jar!/scala/concurrent/Future.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="37" column="58" lean-forward="true" selection-start-line="37" selection-start-column="58" selection-end-line="37" selection-end-column="58" />
-          <folding>
-            <element signature="e#41#70#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="591">
+          <caret line="114" column="31" lean-forward="true" selection-start-line="114" selection-start-column="31" selection-end-line="114" selection-end-column="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/StabilisationAlgorithm.scala">
+    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/java.base/sun/nio/ch/WindowsSelectorImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="56" column="29" lean-forward="true" selection-start-line="56" selection-start-column="29" selection-end-line="56" selection-end-column="29" />
+        <state relative-caret-position="256">
+          <caret line="296" column="43" lean-forward="true" selection-start-line="296" selection-start-column="42" selection-end-line="296" selection-end-column="43" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FindPredecessorAlgorithm.scala">
+    <entry file="file://$PROJECT_DIR$/modules/demo/src/main/resources/webapp/websocket.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="58" column="6" selection-start-line="58" selection-start-column="6" selection-end-line="58" selection-end-column="6" />
+        <state relative-caret-position="187">
+          <caret line="104" lean-forward="true" selection-start-line="104" selection-end-line="104" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/WebService.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="765">
+          <caret line="87" column="70" selection-start-line="87" selection-start-column="70" selection-end-line="87" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/ClosestPrecedingNodeAlgorithm.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="43" column="15" selection-start-line="43" selection-start-column="6" selection-end-line="43" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/CheckPredecessorAlgorithm.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="31" column="12" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/WebSocketWorker.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.2/scala-library-2.13.2-sources.jar!/scala/Predef.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="404">
+          <caret line="160" column="7" selection-start-line="160" selection-start-column="7" selection-end-line="160" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FindSuccessorAlgorithm.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="42" column="4" lean-forward="true" selection-start-line="42" selection-start-column="4" selection-end-line="42" selection-end-column="4" />
+        <state relative-caret-position="952">
+          <caret line="60" column="40" selection-start-line="60" selection-start-column="40" selection-end-line="60" selection-end-column="40" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/Governor.scala">
+    <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/shared/NodeInfo.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="144" column="31" lean-forward="true" selection-start-line="144" selection-start-column="31" selection-end-line="144" selection-end-column="31" />
-          <folding>
-            <element signature="e#41#74#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="51">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FixFingersAlgorithm.scala">
+    <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FindPredecessorAlgorithm.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="57" column="48" lean-forward="true" selection-start-line="57" selection-start-column="48" selection-end-line="57" selection-end-column="48" />
+        <state relative-caret-position="1649">
+          <caret line="103" column="64" selection-start-line="103" selection-start-column="64" selection-end-line="103" selection-end-column="64" />
           <folding>
             <element signature="e#52#108#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Event.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="81" selection-start-line="18" selection-start-column="81" selection-end-line="18" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/Demo.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="37" column="65" selection-start-line="37" selection-start-column="65" selection-end-line="37" selection-end-column="65" />
+          <folding>
+            <element signature="e#41#70#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/SimulationTracker.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
+          <folding>
+            <element signature="e#41#87#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/dht/src/main/scala/com/tristanpenman/chordial/dht/Coordinator.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="43" column="19" selection-start-line="43" selection-start-column="19" selection-end-line="43" selection-end-column="19" />
+          <folding>
+            <element signature="e#40#86#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/ChordConfig.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
+          <folding>
+            <element signature="e#40#64#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/EventWriter.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="93" selection-start-line="15" selection-start-column="93" selection-end-line="15" selection-end-column="93" />
+          <folding>
+            <element signature="e#41#87#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/demo/src/main/scala/com/tristanpenman/chordial/demo/Governor.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="594">
+          <caret line="64" column="8" selection-start-line="64" selection-start-column="8" selection-end-line="64" selection-end-column="8" />
+          <folding>
+            <element signature="e#41#74#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/StabilisationAlgorithm.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="103" column="39" selection-start-line="103" selection-start-column="39" selection-end-line="103" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Node.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3944">
+          <caret line="253" column="46" selection-start-line="253" selection-start-column="46" selection-end-line="253" selection-end-column="46" />
+          <folding>
+            <element signature="e#41#74#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Pointers.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="26" lean-forward="true" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
+        <state relative-caret-position="352">
+          <caret line="75" column="52" lean-forward="true" selection-start-line="75" selection-start-column="52" selection-end-line="75" selection-end-column="52" />
           <folding>
             <element signature="e#41#60#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/Node.scala">
+    <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/FixFingersAlgorithm.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="242" column="60" lean-forward="true" selection-start-line="242" selection-start-column="60" selection-end-line="242" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/core/src/main/scala/com/tristanpenman/chordial/core/algorithms/ClosestPrecedingNodeAlgorithm.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="69" column="3" lean-forward="true" selection-start-line="69" selection-start-column="3" selection-end-line="69" selection-end-column="3" />
+        <state relative-caret-position="119">
+          <caret line="61" column="49" lean-forward="true" selection-start-line="61" selection-start-column="49" selection-end-line="61" selection-end-column="49" />
+          <folding>
+            <element signature="e#52#108#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

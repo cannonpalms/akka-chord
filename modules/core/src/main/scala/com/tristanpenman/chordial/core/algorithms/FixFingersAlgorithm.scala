@@ -21,9 +21,13 @@ import com.tristanpenman.chordial.core.shared.NodeInfo
   * Although the algorithm is defined a way that allows 'find_successor' to be performed as an ordinary method call,
   * this class performs the operation by sending a message to an ActorRef and awaiting a response.
   */
-final class FixFingersAlgorithm(node: NodeInfo, pointersRef: ActorRef) extends Actor with ActorLogging {
+final class FixFingersAlgorithm(node: NodeInfo, pointersRef: ActorRef, keyspaceBits: Int)
+    extends Actor
+    with ActorLogging {
 
   import FixFingersAlgorithm._
+
+  private val idModulus = 1 << keyspaceBits
 
   def awaitIncrementNextFingerToFix(replyTo: ActorRef): Receive = {
     case IncrementNextFingerToFixOk =>
@@ -54,6 +58,7 @@ final class FixFingersAlgorithm(node: NodeInfo, pointersRef: ActorRef) extends A
   }
   def awaitFindSuccessor(replyTo: ActorRef, next: Int): Receive = {
     case FindSuccessorOk(_, successor) =>
+//       log.info(s"UpdateFinger($next -> ${successor.id})")
       pointersRef ! UpdateFinger(next, successor)
       context.become(awaitUpdateFinger(replyTo))
 
@@ -71,9 +76,10 @@ final class FixFingersAlgorithm(node: NodeInfo, pointersRef: ActorRef) extends A
 
   def awaitGetNextFingerToFix(replyTo: ActorRef): Receive = {
     case GetNextFingerToFixOk(next) =>
-      log.info(s"Node id: ${node.id}. 2^next: ${math.pow(2, next).toInt}")
-      log.info(s"Next finger to fix: $next (id: ${node.id + math.pow(2, next).toInt})")
-      node.ref ! FindSuccessor(node.id + math.pow(2, next).toInt)
+      val nextFingerId = (node.id + (1 << next)) % idModulus
+//       log.info(s"Next finger to fix: $next (id: $nextFingerId) (nodeId: ${node.id}, idModulus: $idModulus)")
+//       log.info(s"FindSuccessor($nextFingerId)")
+      node.ref ! FindSuccessor(nextFingerId)
       context.become(awaitFindSuccessor(replyTo, next))
 
     case FixFingersAlgorithmStart =>
@@ -105,6 +111,6 @@ object FixFingersAlgorithm {
 
   final case class FixFingersAlgorithmError(message: String) extends FixFingersAlgorithmStartResponse
 
-  def props(node: NodeInfo, pointersRef: ActorRef): Props =
-    Props(new FixFingersAlgorithm(node, pointersRef))
+  def props(node: NodeInfo, pointersRef: ActorRef, keyspaceBits: Int): Props =
+    Props(new FixFingersAlgorithm(node, pointersRef, keyspaceBits))
 }

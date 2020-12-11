@@ -5,7 +5,7 @@ import java.net.InetSocketAddress
 import akka.actor.{Actor, ActorRef, ActorSystem}
 import akka.testkit.{ImplicitSender, TestActorRef, TestKit}
 import akka.util.Timeout
-import com.tristanpenman.chordial.core.Pointers.{GetSuccessor, GetSuccessorOk}
+import com.tristanpenman.chordial.core.Pointers.{GetFingerTable, GetFingerTableOk, GetSuccessor, GetSuccessorOk}
 import com.tristanpenman.chordial.core.algorithms.ClosestPrecedingNodeAlgorithm._
 import com.tristanpenman.chordial.core.shared.NodeInfo
 import org.scalatest.WordSpecLike
@@ -24,9 +24,11 @@ final class ClosestPrecedingNodeAlgorithmSpec
   // Time to wait before concluding that no additional messages will be received
   private val spuriousMessageDuration = 150.milliseconds
 
+  private val fingerTableSize = 3
+
   // Function to create a new ClosestPrecedingNodeAlgorithm actor using a given ActorRef as the Pointers actor
   private def newAlgorithmActor(node: NodeInfo, pointersRef: ActorRef) =
-    system.actorOf(ClosestPrecedingNodeAlgorithm.props(node, pointersRef, algorithmTimeout))
+    system.actorOf(ClosestPrecedingNodeAlgorithm.props(node, pointersRef, fingerTableSize, algorithmTimeout))
 
   // Actor that will always discard messages
   private val unresponsiveActor = TestActorRef(new Actor {
@@ -47,6 +49,10 @@ final class ClosestPrecedingNodeAlgorithmSpec
 
   "A ClosestPrecedingNodeAlgorithm actor" when {
     "initialised with a Node ID of 1 and a Pointers actor that only knows about Node ID 1" should {
+      val fingerTable: Vector[NodeInfo] = Vector.fill(fingerTableSize) {
+        NodeInfo(1L, dummyAddr, dummyActorRef)
+      }
+
       def newPointersActor: ActorRef =
         TestActorRef(new Actor {
           def failOnReceive: Receive = {

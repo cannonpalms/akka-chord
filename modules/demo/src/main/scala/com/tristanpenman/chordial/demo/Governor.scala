@@ -9,7 +9,7 @@ import com.tristanpenman.chordial.core.Event.NodeShuttingDown
 import com.tristanpenman.chordial.core.Node._
 import com.tristanpenman.chordial.core.Pointers.{GetSuccessor, GetSuccessorOk, GetSuccessorResponse}
 import com.tristanpenman.chordial.core.Router.{Start, StartFailed, StartOk}
-import com.tristanpenman.chordial.core.{Node, Router}
+import com.tristanpenman.chordial.core.{ChordConfig, Node, Router}
 
 import scala.annotation.tailrec
 import scala.concurrent.Await
@@ -28,6 +28,9 @@ final class Governor(val keyspaceBits: Int) extends Actor with ActorLogging with
 
   private val idModulus = 1 << keyspaceBits
 
+  // RNG for lookup event ID generation
+  private val rng = new Random()
+
   // How long to wait when making requests that may be routed to other nodes
   private val externalRequestTimeout = Timeout(500.milliseconds)
 
@@ -39,17 +42,28 @@ final class Governor(val keyspaceBits: Int) extends Actor with ActorLogging with
   private val joinRequestTimeout = Timeout(2000.milliseconds)
   private val getSuccessorRequestTimeout = Timeout(2000.milliseconds)
 
+  private val config = ChordConfig(
+    keyspaceBits = keyspaceBits,
+    algorithmTimeout = algorithmTimeout,
+    externalRequestTimeout = externalRequestTimeout,
+    checkPredecessorDelay = 300.millis,
+    checkPredecessorTimeout = Timeout(2500.millis),
+    stabilizationDelay = 500.millis,
+    stabilizationTimeout = Timeout(1000.millis),
+    fixFingersDelay = 1000.millis,
+    fixFingersTimeout = Timeout(1000.millis)
+  )
+
   private def createNode(nodeId: Long, nodeAddr: InetSocketAddress): ActorRef =
     context.system.actorOf(
       Node.props(
         nodeId,
         nodeAddr,
-        keyspaceBits,
-        algorithmTimeout,
-        externalRequestTimeout,
+        config,
         context.system.eventStream,
         router
-      )
+      ),
+      s"node-$nodeId"
     )
 
   @tailrec
@@ -108,7 +122,7 @@ final class Governor(val keyspaceBits: Int) extends Actor with ActorLogging with
       sender() ! GetNodeIdSetOk(nodes.keySet ++ terminatedNodes)
 
     case GetNodeState(nodeId: Long) =>
-      log.info(s"Governor.GetNodeState: $nodeId")
+      // log.info(s"Governor.GetNodeState: $nodeId")
       if (nodes.contains(nodeId)) {
         sender() ! GetNodeStateOk(true)
       } else if (terminatedNodes.contains(nodeId)) {
@@ -142,7 +156,7 @@ final class Governor(val keyspaceBits: Int) extends Actor with ActorLogging with
     case TerminateNode(nodeId: Long) =>
       nodes.get(nodeId) match {
         case Some(nodeRef) =>
-          context.stop(nodeRef)
+          nodeRef ! Terminate
           context.become(receiveWithNodes(nodeAddr, nodes - nodeId, terminatedNodes + nodeId))
           sender() ! TerminateNodeResponseOk
           context.system.eventStream.publish(NodeShuttingDown(nodeId))
@@ -154,13 +168,14 @@ final class Governor(val keyspaceBits: Int) extends Actor with ActorLogging with
     case LookupKey(originNodeId: Long, key: Long) =>
       nodes.get(originNodeId) match {
         case Some(nodeRef) =>
-          log.info(s"Starting lookup from node $originNodeId for key $key")
+          // log.info(s"Starting lookup from node $originNodeId for key $key")
+          val lookupId = rng.nextLong()
           nodeRef
-            .ask(FindSuccessor(key))(algorithmTimeout)
+            .ask(FindSuccessor(key, Some(lookupId)))(algorithmTimeout)
             .mapTo[FindSuccessorResponse]
             .map {
               case FindSuccessorOk(_, successor) =>
-                log.info(s"Governor received lookup response: ${successor.id}")
+                // log.info(s"Governor received lookup response: ${successor.id}")
                 LookupKeyResponseOk(successor.id)
               case Node.FindSuccessorError(_, message) =>
                 LookupKeyResponseError(message)
