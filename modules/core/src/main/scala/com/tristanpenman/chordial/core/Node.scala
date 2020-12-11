@@ -259,10 +259,10 @@ final class Node(nodeId: Long,
     case m @ GetSuccessor =>
       pointersRef.ask(m)(externalRequestTimeout).pipeTo(sender())
 
-    case m @ UpdatePredecessor =>
+    case m @ UpdatePredecessor(predecessor) =>
       pointersRef.ask(m)(algorithmTimeout).pipeTo(sender())
 
-    case m @ UpdateSuccessor =>
+    case m @ UpdateSuccessor(successor) =>
       pointersRef.ask(m)(algorithmTimeout).pipeTo(sender())
 
     case FindPredecessor(queryId, lookupId) =>
