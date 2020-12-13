@@ -112,6 +112,13 @@ final class StabilisationAlgorithm(router: ActorRef, node: NodeInfo, pointersRef
       replyTo ! StabilisationAlgorithmError("GetSuccessor timed out")
   }
 
+//  private def awaitFindSuccessor(replyTo: ActorRef): Receive = {
+//    case StabilisationAlgorithmStart =>
+//      sender() ! StabilisationAlgorithmAlreadyRunning
+//    case FindSuccessorOk(successor) =>
+//
+//  }
+
   override def receive: Receive = {
     case StabilisationAlgorithmStart =>
       context.setReceiveTimeout(requestTimeout.duration)

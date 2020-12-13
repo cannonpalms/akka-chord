@@ -1,9 +1,11 @@
 package com.tristanpenman.chordial.core.algorithms
 
-import akka.actor.{Actor, ActorLogging, ActorRef, Props}
+import akka.actor.{Actor, ActorLogging, ActorRef, Props, ReceiveTimeout}
 import com.tristanpenman.chordial.core.Node._
 import com.tristanpenman.chordial.core.Pointers._
 import com.tristanpenman.chordial.core.shared.NodeInfo
+
+import scala.concurrent.duration._
 
 /**
   * Actor class that implements the FixFingers algorithm
@@ -60,6 +62,7 @@ final class FixFingersAlgorithm(node: NodeInfo, pointersRef: ActorRef, keyspaceB
     case FindSuccessorOk(_, successor) =>
 //       log.info(s"UpdateFinger($next -> ${successor.id})")
       pointersRef ! UpdateFinger(next, successor)
+      context.setReceiveTimeout(Duration.Undefined)
       context.become(awaitUpdateFinger(replyTo))
 
     case FindSuccessorError(queryId, message) =>
@@ -69,6 +72,13 @@ final class FixFingersAlgorithm(node: NodeInfo, pointersRef: ActorRef, keyspaceB
 
     case FixFingersAlgorithmStart =>
       sender() ! FixFingersAlgorithmAlreadyRunning
+
+    case ReceiveTimeout =>
+      replyTo ! FixFingersAlgorithmError(
+        s"Lookup request through node ${node.id} failed."
+      )
+      context.setReceiveTimeout(Duration.Undefined)
+      context.become(receive)
 
     case message =>
       log.warning("Received unexpected message while waiting for FindSuccessorResponse: {}", message)
@@ -80,10 +90,16 @@ final class FixFingersAlgorithm(node: NodeInfo, pointersRef: ActorRef, keyspaceB
 //       log.info(s"Next finger to fix: $next (id: $nextFingerId) (nodeId: ${node.id}, idModulus: $idModulus)")
 //       log.info(s"FindSuccessor($nextFingerId)")
       node.ref ! FindSuccessor(nextFingerId)
+      context.setReceiveTimeout(50.millis)
       context.become(awaitFindSuccessor(replyTo, next))
 
     case FixFingersAlgorithmStart =>
       sender() ! FixFingersAlgorithmAlreadyRunning
+
+    case ReceiveTimeout =>
+      replyTo ! FixFingersAlgorithmError("GetNextFingerToFix timed out.")
+      context.setReceiveTimeout(Duration.Undefined)
+      context.become(receive)
 
     case message =>
       log.warning("Received unexpected message while waiting for NextFingerToFixResponse: {}", message)

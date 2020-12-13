@@ -16,6 +16,13 @@ import scala.concurrent.Await
 import scala.concurrent.duration._
 import scala.util.{Failure, Random, Success}
 
+class DeadLetterMonitor extends Actor with ActorLogging {
+  def receive: Receive = {
+    case d: DeadLetter =>
+      log.info("Dead letter: {}", d)
+  }
+}
+
 final class Governor(val keyspaceBits: Int) extends Actor with ActorLogging with Stash {
   import Governor._
   import context.dispatcher
@@ -53,6 +60,9 @@ final class Governor(val keyspaceBits: Int) extends Actor with ActorLogging with
     fixFingersDelay = 1000.millis,
     fixFingersTimeout = Timeout(1000.millis)
   )
+
+  val deadLetterMonitor = context.system.actorOf(Props[DeadLetterMonitor], name = "deadLetterMonitor")
+  context.system.eventStream.subscribe(deadLetterMonitor, classOf[DeadLetter])
 
   private def createNode(nodeId: Long, nodeAddr: InetSocketAddress): ActorRef =
     context.system.actorOf(

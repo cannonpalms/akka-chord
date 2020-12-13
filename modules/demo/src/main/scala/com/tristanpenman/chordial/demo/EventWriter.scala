@@ -14,6 +14,7 @@ final class EventWriter extends Actor with ActorLogging {
     // log.info(s"""Predecessor updated: { "nodeId": $nodeId, "predecessorId": $predecessorId }""")
     case SuccessorUpdated(nodeId, successorId) =>
     // log.info(s"""Successor updated: { "nodeId": $nodeId, "successorId": $successorId }""")
+    case _ =>
   }
 
 }

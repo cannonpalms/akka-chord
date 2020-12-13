@@ -39,7 +39,7 @@ final class FindSuccessorAlgorithm(router: ActorRef, lookupId: Option[Long]) ext
 
   def awaitFindPredecessor(delegate: ActorRef): Receive = {
     case FindPredecessorOk(_, predecessor) =>
-      // log.info(s"Predecessor found: ${predecessor.id}. Now retrieving successor of ${predecessor.id}.")
+//       log.info(s"Predecessor found: ${predecessor.id}. Now retrieving successor of ${predecessor.id}.")
       router ! Forward(predecessor.id, predecessor.addr, GetSuccessor)
       context.become(awaitGetSuccessor(delegate))
 

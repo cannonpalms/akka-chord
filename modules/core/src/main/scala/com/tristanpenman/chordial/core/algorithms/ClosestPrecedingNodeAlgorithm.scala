@@ -2,10 +2,10 @@ package com.tristanpenman.chordial.core.algorithms
 
 import akka.actor.{Actor, ActorLogging, ActorRef, Props, ReceiveTimeout}
 import akka.util.Timeout
-import com.tristanpenman.chordial.core.Pointers.{GetFingerTable, GetFingerTableOk}
+import com.tristanpenman.chordial.core.Pointers.{GetFingerTable, GetFingerTableOk, ResetFinger}
 import com.tristanpenman.chordial.core.shared.{Interval, NodeInfo}
 
-import scala.concurrent.duration.Duration
+import scala.concurrent.duration._
 import scala.util.control.Breaks._
 
 /**
@@ -33,32 +33,61 @@ final class ClosestPrecedingNodeAlgorithm(node: NodeInfo,
 
   import ClosestPrecedingNodeAlgorithm._
 
-  private def reset = {
-    context.setReceiveTimeout(Duration.Undefined)
-    context.become(receive)
+  private def checkFinger(queryId: Long, replyTo: ActorRef, fingerTable: Vector[NodeInfo], index: Int): Receive = {
+    case Pong =>
+      val finger = fingerTable(index)
+      replyTo ! ClosestPrecedingNodeAlgorithmFinished(finger)
+      context.stop(self)
+    case ReceiveTimeout =>
+      log.debug("TIMEOUT")
+      log.debug("Node {} did not response to Ping from {}", fingerTable(index).id, node.id)
+      fingerTable(index).ref ! ResetFinger(index)
+      if (index <= 0) {
+        // give up and use current node
+        replyTo ! ClosestPrecedingNodeAlgorithmFinished(node)
+        context.stop(self)
+      } else {
+        var pingSent = false
+        breakable
+        {
+          for (k <- index - 1 to 0 by -1) {
+            val interval = Interval(node.id, queryId, inclusiveBegin = false, inclusiveEnd = false)
+            val finger = fingerTable(k)
+            if (interval.contains(finger.id)) {
+              pingSent = true
+              finger.ref ! Ping
+              context.become(checkFinger(queryId, replyTo, fingerTable, k))
+              break
+            }
+          }
+          if (!pingSent) {
+            replyTo ! ClosestPrecedingNodeAlgorithmFinished(node)
+            context.stop(self)
+          }
+        }
+      }
   }
 
   private def awaitFinger(queryId: Long, replyTo: ActorRef): Receive = {
     case GetFingerTableOk(fingerTable) =>
-      var done = false
+      var pingSent = false
       breakable
       {
         for (k <- fingerTable.size - 1 to 0 by -1) {
           val interval = Interval(node.id, queryId, inclusiveBegin = false, inclusiveEnd = false)
-          if (interval.contains(fingerTable(k).id)) {
-//            log.info(s"[queryId: $queryId] - Send ClosestPrecedingNodeAlgorithmFinished(${fingerTable(k).id}) (in loop)")
-            replyTo ! ClosestPrecedingNodeAlgorithmFinished(fingerTable(k))
-//            reset
-                      context.stop(self)
-            done = true
+          val finger = fingerTable(k)
+          if (interval.contains(finger.id)) {
+            // test if finger is alive before using it
+            finger.ref ! Ping
+            context.become(checkFinger(queryId, replyTo, fingerTable, k))
+            context.setReceiveTimeout(5.millis)
+            pingSent = true
             break
           }
         }
       }
-      if (!done) {
-//        log.info(s"[queryId: $queryId] - Send ClosestPrecedingNodeAlgorithmFinished(${node.id}) (after loop)")
+      if (!pingSent) {
         replyTo ! ClosestPrecedingNodeAlgorithmFinished(node)
-//                reset
         context.stop(self)
       }
 
@@ -97,6 +126,9 @@ object ClosestPrecedingNodeAlgorithm {
   sealed trait ClosestPrecedingNodeAlgorithmResetResponse
 
   case object ClosestPrecedingNodeAlgorithmReady extends ClosestPrecedingNodeAlgorithmResetResponse
+
+  case object Ping
+  case object Pong
 
   def props(node: NodeInfo, pointersRef: ActorRef, fingerTableSize: Int, extTimeout: Timeout): Props =
     Props(new ClosestPrecedingNodeAlgorithm(node, pointersRef, fingerTableSize, extTimeout: Timeout))

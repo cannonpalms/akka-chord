@@ -23,6 +23,7 @@ final class SimulationTracker extends Actor with ActorLogging {
         // that should probably be a red flag, but oh well
         case None => Some(Lookup(nodeId, queryId, lookupId, 1))
       })))
+    case _ =>
   }
 
   override def receive: Receive =

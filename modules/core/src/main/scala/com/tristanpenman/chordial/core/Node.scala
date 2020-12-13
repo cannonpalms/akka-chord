@@ -15,6 +15,7 @@ import com.tristanpenman.chordial.core.algorithms.FindSuccessorAlgorithm._
 import com.tristanpenman.chordial.core.algorithms.FixFingersAlgorithm._
 import com.tristanpenman.chordial.core.algorithms.NotifyAlgorithm._
 import com.tristanpenman.chordial.core.algorithms.StabilisationAlgorithm._
+import com.tristanpenman.chordial.core.algorithms.VoluntaryLeaveAlgorithm.{VoluntaryLeaveOk, VoluntaryLeaveStart}
 import com.tristanpenman.chordial.core.algorithms._
 import com.tristanpenman.chordial.core.shared.NodeInfo
 
@@ -67,7 +68,7 @@ final class Node(nodeId: Long,
     context.actorOf(Pointers.props(nodeId, fingerTableSize, seedInfo, eventStream))
 
   private def newCheckPredecessorAlgorithm(nodeRef: ActorRef) =
-    context.actorOf(CheckPredecessorAlgorithm.props(router, nodeRef, externalRequestTimeout))
+      context.actorOf(CheckPredecessorAlgorithm.props(router, nodeRef, externalRequestTimeout))
 
   private def newStabilisationAlgorithm(pointersRef: ActorRef) =
     context.actorOf(StabilisationAlgorithm.props(router, nodeInfo, pointersRef, externalRequestTimeout))
@@ -312,67 +313,23 @@ final class Node(nodeId: Long,
       notify(pointersRef, NodeInfo(candidateId, candidateAddr, candidateRef), sender())
 
     case Terminate =>
-      voluntarilyLeave(pointersRef, () => {
-        // tear down scheduled processes and stop children
-        checkPredecessorCancellable.cancel()
-        stabilisationCancellable.cancel()
-        fixFingersCancellable.cancel()
+      // tear down scheduled processes and stop children
+      checkPredecessorCancellable.cancel()
+      stabilisationCancellable.cancel()
+      fixFingersCancellable.cancel()
+      context.stop(checkPredecessorAlgorithm)
+      context.stop(stabilisationAlgorithm)
+      context.stop(fixFingersAlgorithm)
 
-        context.stop(pointersRef)
-        context.stop(checkPredecessorAlgorithm)
-        context.stop(stabilisationAlgorithm)
-        context.stop(fixFingersAlgorithm)
-        context.stop(self)
-        sender() ! TerminateOk
-      })
+      val voluntaryLeaveAlgorithm = context.actorOf(VoluntaryLeaveAlgorithm.props(nodeInfo))
+      voluntaryLeaveAlgorithm ! VoluntaryLeaveStart
+    case VoluntaryLeaveOk =>
+//      log.info("Voluntary departure procedure complete. Shutting down node: {}", nodeId)
+      context.stop(pointersRef)
+      context.stop(self)
+    case ClosestPrecedingNodeAlgorithm.Ping =>
+      sender() ! ClosestPrecedingNodeAlgorithm.Pong
   }
-
-  private def voluntarilyLeave(pointersRef: ActorRef, callback: () => Unit) = {
-    // Send successor in notification to predecessor so that predecessor can update its successor
-    val predecessorFuture = getPredecessorPointer(pointersRef)
-    val successorFuture = getSuccessorPointer(pointersRef)
-
-    successorFuture onComplete {
-      case util.Success(successor) =>
-        // log.info(s"Terminate: retrieved successor -- ${successor.id}")
-        predecessorFuture onComplete {
-          case util.Success(predecessorMaybe) =>
-            predecessorMaybe match {
-              case Some(predecessor) =>
-                // log.info(s"Terminate: received predecessor -- ${predecessor.id}")
-                predecessor.ref ! UpdateSuccessor(successor)
-                successor.ref ! UpdatePredecessor(predecessor)
-                callback()
-              case None =>
-                successor.ref ! ResetPredecessor
-                callback()
-            }
-          case util.Failure(ex) =>
-            log.error("Terminate failure (GetPredecessor): {}", ex.getMessage)
-            callback()
-        }
-      case util.Failure(ex) =>
-        log.error("Terminate failure (GetSuccessor): {}", ex.getMessage)
-        callback()
-    }
-  }
-
-  private def getSuccessorPointer(pointersRef: ActorRef): Future[NodeInfo] =
-    pointersRef
-      .ask(GetSuccessor)(algorithmTimeout)
-      .mapTo[GetSuccessorResponse]
-      .map {
-        case GetSuccessorOk(successor) => successor
-      }
-
-  private def getPredecessorPointer(pointersRef: ActorRef): Future[Option[NodeInfo]] =
-    pointersRef
-      .ask(GetPredecessor)(algorithmTimeout)
-      .mapTo[GetPredecessorResponse]
-      .map {
-        case GetPredecessorOk(predecessor) => Some(predecessor)
-        case GetPredecessorOkButUnknown    => None
-      }
 
   override def receive: Receive = {
     case RegisterOk(_) =>
